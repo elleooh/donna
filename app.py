@@ -1,7 +1,7 @@
 """FastAPI application setup and routing."""
 
 from fastapi import FastAPI, WebSocket, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from handlers.voice import VoiceHandler
 from handlers.sms import SMSHandler
 from agents.manager import AgentManager
@@ -20,12 +20,6 @@ async def index_page():
 async def handle_media_stream(websocket: WebSocket):
     handler = VoiceHandler(websocket, agent_manager)
     await handler.handle_media_stream()
-
-
-@app.post("/sms")
-async def handle_sms(request: Request):
-    handler = SMSHandler(agent_manager)
-    return await handler.handle_sms(request)
 
 
 if __name__ == "__main__":
