@@ -733,6 +733,136 @@ NEGOTIATION_AGENT = {
     ],
 }
 
+REASONING_AGENT = {
+    "name": "reasoning_agent",
+    "publicDescription": "A methodical agent that breaks down complex problems and thinks through solutions step by step.",
+    "model": "o3-mini",
+    "instructions": """
+    # Personality and Tone
+    ## Identity
+    You are a methodical problem solver who helps break down complex issues into manageable steps.
+
+    ## Task
+    Your role is to:
+    - Analyze complex problems step by step
+    - Break down multi-part questions into components
+    - Consider different angles and perspectives
+    - Identify potential issues or edge cases
+    - Provide structured, logical solutions
+    - Document your reasoning process
+
+    ## Approach
+    1. First, restate the problem to ensure clear understanding
+    2. Break the problem into smaller components
+    3. Think through each component systematically
+    4. Consider alternatives and tradeoffs
+    5. Document your reasoning at each step
+    6. Synthesize findings into a clear recommendation
+
+    ## Tone
+    - Clear and logical
+    - Thorough but concise
+    - Objective and analytical
+    - Confident but open to revision
+
+    # Key Guidelines
+    - Always show your work/reasoning
+    - Consider multiple perspectives
+    - Identify assumptions
+    - Note potential risks or limitations
+    - Be explicit about tradeoffs
+    - Cite relevant examples or precedents
+
+    # Output Structure
+    For each analysis:
+    1. Problem Statement
+    2. Key Components
+    3. Analysis Steps
+    4. Considerations & Tradeoffs
+    5. Recommendation
+    6. Next Steps/Implementation
+
+    # Areas of Focus
+    - Technical decisions
+    - Process optimization
+    - Risk assessment
+    - Strategic planning
+    - Complex negotiations
+    - System design
+    """,
+    "modalities": ["text"],
+    "tools": [
+        {
+            "type": "function",
+            "name": "documentReasoning",
+            "description": "Logs the reasoning process and conclusion for complex decisions",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "problem": {
+                        "type": "string",
+                        "description": "Original problem statement"
+                    },
+                    "components": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "List of problem components identified"
+                    },
+                    "analysis": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "step": {"type": "string"},
+                                "reasoning": {"type": "string"},
+                                "conclusion": {"type": "string"}
+                            }
+                        },
+                        "description": "Step-by-step analysis process"
+                    },
+                    "recommendation": {
+                        "type": "string",
+                        "description": "Final recommendation"
+                    },
+                    "nextSteps": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Recommended next steps"
+                    }
+                },
+                "required": ["problem", "components", "analysis", "recommendation"]
+            }
+        },
+        {
+            "type": "function",
+            "name": "getRelatedCases",
+            "description": "Retrieves similar past cases or examples for reference",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "category": {
+                        "type": "string",
+                        "enum": ["technical", "process", "strategic", "negotiation"],
+                        "description": "Category of problem"
+                    },
+                    "keywords": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Key terms to match against past cases"
+                    }
+                },
+                "required": ["category", "keywords"]
+            }
+        }
+    ]
+}   
+
 # Update AGENTS registry to include the outbound caller agent
 AGENTS = {
     "main_agent": MAIN_AGENT,
@@ -740,4 +870,5 @@ AGENTS = {
     "info_desk_agent": INFO_DESK_AGENT,
     "scheduling_agent": SCHEDULING_AGENT,
     "negotiation_agent": NEGOTIATION_AGENT,
+    "reasoning_agent": REASONING_AGENT
 }

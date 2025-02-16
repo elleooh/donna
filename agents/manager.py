@@ -6,6 +6,7 @@ from agents.definitions import (
     INFO_DESK_AGENT,
     SCHEDULING_AGENT,
     NEGOTIATION_AGENT,
+    REASONING_AGENT
 )
 from tools import get_tools_for_agent
 import json
@@ -28,6 +29,7 @@ class AgentManager:
             INFO_DESK_AGENT,
             SCHEDULING_AGENT,
             NEGOTIATION_AGENT,
+            REASONING_AGENT
         ]
 
         # Create initial agent dictionary for reference
@@ -52,6 +54,7 @@ class AgentManager:
             "info_desk_agent",
             "scheduling_agent",
             "negotiation_agent",
+            "reasoning_agent"
         ]
         AUTHENTICATION_AGENT["downstream_agents"] = [
             "main_agent",
@@ -63,6 +66,7 @@ class AgentManager:
             "scheduling_agent",
         ]
         NEGOTIATION_AGENT["downstream_agents"] = [
+            "reasoning_agent",
             "scheduling_agent",  # TODO: if there is follow up conversation
         ]
 
@@ -88,7 +92,7 @@ Calls escalate to a more specialized LLM agent or to a human agent, with additio
 Only call this function if one of the available agents is appropriate.
 Don't transfer to your own agent type.
 
-Let the user know you're about to transfer them before doing so.
+Let the user know you're thinking and need a minute them before doing so.
 
 Available Agents:
 {available_agents_list}
