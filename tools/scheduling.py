@@ -30,6 +30,7 @@ async def scheduleMeeting(
     participantOrg: str,
     participantEmail: str,
     meetingType: str,
+    notes: str = None,
 ) -> None:
     """Schedules a meeting at the given date and time.
 

@@ -22,8 +22,8 @@ class OutboundVoiceHandler(BaseVoiceHandler):
         print("Outbound client connected")
 
         try:
-            # Get initial OpenAI connection
-            initial_agent = self.agent_manager.get_agent("main_agent")
+            # Get negotiation agent for outbound calls
+            initial_agent = self.agent_manager.get_agent("negotiation_agent")
             self.openai_ws = await websockets.connect(
                 f"wss://api.openai.com/v1/realtime?model={initial_agent['model']}",
                 extra_headers={
@@ -40,8 +40,10 @@ class OutboundVoiceHandler(BaseVoiceHandler):
                 "latest_media_timestamp": 0,
             }
 
-            # Initialize session
-            await self._initialize_session()
+            # Initialize session with negotiation context
+            await self.agent_manager.initialize_session(
+                self.openai_ws, "negotiation_agent"
+            )
 
             # Start bidirectional communication
             await self._handle_stream()

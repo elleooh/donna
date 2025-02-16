@@ -63,7 +63,6 @@ class AgentManager:
             "scheduling_agent",
         ]
         NEGOTIATION_AGENT["downstream_agents"] = [
-            "main_agent",
             "scheduling_agent",  # TODO: if there is follow up conversation
         ]
 

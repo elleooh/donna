@@ -2,6 +2,23 @@ import json
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any
+from config import CURRENT_OFFER_COMPANY
+from config import CURRENT_OFFER_ROLE
+from config import CURRENT_OFFER_SALARY
+from config import CURRENT_OFFER_EQUITY
+from config import CURRENT_OFFER_SIGNING_BONUS
+
+
+async def checkCurrentOffer(company: str, role: str) -> Dict[str, Any]:
+    """Checks the details of the current offer."""
+    return {
+        "company": CURRENT_OFFER_COMPANY,
+        "location": "San Francisco",
+        "baseSalary": CURRENT_OFFER_SALARY,
+        "equity": CURRENT_OFFER_EQUITY,
+        "signOnBonus": CURRENT_OFFER_SIGNING_BONUS,
+        "title": CURRENT_OFFER_ROLE,
+    }
 
 
 async def checkIndustrySalary(

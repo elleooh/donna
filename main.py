@@ -2,15 +2,25 @@
 
 import argparse
 import uvicorn
+import asyncio
 from services.inbound_service import app as inbound_app
 from services.outbound_service import app as outbound_app
 from config import INBOUND_PORT, OUTBOUND_PORT
+from handlers.outbound import OutboundVoiceHandler
+from agents.manager import AgentManager
 
 
 def run_inbound_service():
     """Run the inbound voice service."""
     print("Starting inbound voice service...")
     uvicorn.run(inbound_app, host="0.0.0.0", port=INBOUND_PORT)
+
+
+async def make_outbound_call(phone_number: str):
+    """Make an outbound call to the specified number."""
+    agent_manager = AgentManager()
+    handler = OutboundVoiceHandler(None, agent_manager)
+    await handler.make_call(phone_number)
 
 
 def run_outbound_service(phone_number: str = None):
@@ -22,6 +32,11 @@ def run_outbound_service(phone_number: str = None):
             "Reminder: All of the rules of TCPA apply even if a call is made by AI.\n"
             "Check with your counsel for legal and compliance advice."
         )
+        # Make the call before starting the server
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(make_outbound_call(phone_number))
+
     uvicorn.run(outbound_app, host="0.0.0.0", port=OUTBOUND_PORT)
 
 

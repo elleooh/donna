@@ -1,7 +1,6 @@
 """InfoDesk-related tools."""
 
 from typing import Dict, Any
-from agents.definitions import ALLOWED_CAREER_FIELDS
 import json
 from datetime import datetime
 from pathlib import Path

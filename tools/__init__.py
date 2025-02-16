@@ -5,16 +5,17 @@ from tools.authentication import verifyRecruiterCredentials
 
 from tools.info_tesk import lookupCareerInfo, logRecruiterRequest
 from tools.scheduling import returnAvailableDateTime, scheduleMeeting
-from tools.negotiation import checkIndustrySalary, logFinalOffer
+from tools.negotiation import checkCurrentOffer, checkIndustrySalary, logFinalOffer
 from agents.definitions import ALLOWED_CAREER_FIELDS
 
-# Registry of tool implementations
-_tools: Dict[str, Callable[..., Awaitable[Any]]] = {
+# Tool registry mapping function names to implementations
+TOOL_REGISTRY = {
     "verifyRecruiterCredentials": verifyRecruiterCredentials,
     "lookupCareerInfo": lookupCareerInfo,
     "logRecruiterRequest": logRecruiterRequest,
     "returnAvailableDateTime": returnAvailableDateTime,
     "scheduleMeeting": scheduleMeeting,
+    "checkCurrentOffer": checkCurrentOffer,
     "checkIndustrySalary": checkIndustrySalary,
     "logFinalOffer": logFinalOffer,
 }
@@ -22,7 +23,7 @@ _tools: Dict[str, Callable[..., Awaitable[Any]]] = {
 
 def get_tool_implementation(name: str) -> Callable[..., Awaitable[Any]]:
     """Get the implementation for a tool by name."""
-    return _tools.get(name)
+    return TOOL_REGISTRY.get(name)
 
 
 # Tool definitions for agents
@@ -212,6 +213,19 @@ SCHEDULING_TOOLS = [
 ]
 
 NEGOTIATION_TOOLS = [
+    {
+        "type": "function",
+        "name": "checkCurrentOffer",
+        "description": "Checks the details of the current offer",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "role": {"type": "string"},
+                "company": {"type": "string"},
+            },
+            "required": ["role", "company"],
+        },
+    },
     {
         "type": "function",
         "name": "checkIndustrySalary",
