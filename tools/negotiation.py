@@ -1,9 +1,12 @@
 import json
 from datetime import datetime
 from pathlib import Path
+from typing import Dict, Any
 
 
-async def checkIndustrySalary(role: str, location: str, yearsOfExperience: int) -> str:
+async def checkIndustrySalary(
+    role: str, location: str, yearsOfExperience: int
+) -> Dict[str, Any]:
     """Checks the industry salary range for the given role in the given location for the given years of experience.
 
     Args:
@@ -17,7 +20,15 @@ async def checkIndustrySalary(role: str, location: str, yearsOfExperience: int) 
     print(
         f"Checking industry salary for {role} in {location} for {yearsOfExperience} years of experience"
     )
-    return f"The industry salary range for {role} in {location} for {yearsOfExperience} years of experience is $300,000 - $500,000"
+    return {
+        "salary_min": 200000,
+        "salary_max": 500000,
+        "salary_average": 350000,
+        "currency": "USD",
+        "role": role,
+        "location": location,
+        "yearsOfExperience": yearsOfExperience,
+    }
 
 
 async def logFinalOffer(originalOffer: dict, finalOffer: dict, nextSteps: str) -> None:
