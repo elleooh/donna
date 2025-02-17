@@ -4,7 +4,7 @@ import os
 import re
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 # Voice settings
 VOICE = "alloy"  # or any other voice ID you're using
@@ -32,6 +32,7 @@ PHONE_NUMBER_FROM = os.getenv("PHONE_NUMBER_FROM")
 
 # Domain Settings
 raw_domain = os.getenv("DOMAIN", "")
+# Strip quotes and protocols
 DOMAIN = re.sub(r"(^\w+:|^)\/\/|\/+$", "", raw_domain)
 
 # Port Settings

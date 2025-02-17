@@ -3,11 +3,8 @@
 import json
 import asyncio
 import websockets
-from twilio.rest import Client
 from config import (
     OPENAI_API_KEY,
-    TWILIO_ACCOUNT_SID,
-    TWILIO_AUTH_TOKEN,
     PHONE_NUMBER_FROM,
     DOMAIN,
     SYSTEM_MESSAGE,
