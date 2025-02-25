@@ -2,6 +2,8 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
+> Built for OpenAI Realtime Voice x Reasoning Hackathon NYC 2024
+
 ## What It Does
 
 Donna is an intelligent voice agent that acts as your personal job search assistant, helping you handle the entire job search and negotiation process. It provides a seamless interface between job seekers and recruiters through voice conversations, leveraging OpenAI's real-time speech models and Twilio's voice services.
