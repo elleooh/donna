@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-> Built for OpenAI Realtime Voice x Reasoning Hackathon NYC 2024
+> Built for OpenAI Realtime Voice x Reasoning Hackathon NYC 2025
 
 ## What It Does
 
